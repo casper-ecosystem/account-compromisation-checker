@@ -1,13 +1,6 @@
 import { useState } from 'react';
 import { ClickUI, Lang, ThemeModeType } from '@make-software/csprclick-ui';
-import {
-	accountMenuItems,
-	CURRENCIES,
-	currencySettings,
-	languageSettings,
-	NETWORKS,
-	networkSettings,
-} from './settings';
+import { accountMenuItems, languageSettings } from './settings';
 import styled from 'styled-components';
 export * from './settings';
 
@@ -36,19 +29,15 @@ export interface TopBarProps {
 
 const ClickTopBar = ({ themeMode, onThemeSwitch }: TopBarProps) => {
 	const [lang, setLang] = useState<Lang>(Lang.EN);
-	const [currency, setCurrency] = useState(CURRENCIES[0]);
-	const [network, setNetwork] = useState<string>(NETWORKS[1]);
 
 	return (
 		<TopBarSection>
 			<TopBarContainer>
 				<ClickUI
 					topBarSettings={{
-						onThemeSwitch:onThemeSwitch,
-						accountMenuItems:accountMenuItems,
-						languageSettings:languageSettings(lang, setLang),
-						currencySettings:currencySettings(currency, setCurrency),
-						networkSettings:networkSettings(network, setNetwork),
+						onThemeSwitch: onThemeSwitch,
+						accountMenuItems: accountMenuItems,
+						languageSettings: languageSettings(lang, setLang),
 					}}
 					themeMode={themeMode}
 				/>

@@ -2,18 +2,9 @@ import { useEffect, useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { useClickRef, ThemeModeType } from '@make-software/csprclick-ui';
 import ClickTopBar from './components/ClickTopBar';
-import { LandingBrief, SignedInBrief } from './components/GettingStarted';
 import Container from './components/container';
 import { AppTheme } from './theme';
-import { Welcome } from './components/GettingStarted/components';
-
-const GettingStartedContainer = styled.div(({ theme }) =>
-	theme.withMedia({
-		maxWidth: ['100%', '720px', '960px'],
-		padding: '0 12px',
-		margin: '0 auto',
-	})
-);
+import { Home } from './components/Home';
 
 const App = () => {
 	const clickRef = useClickRef();
@@ -42,10 +33,7 @@ const App = () => {
 				onThemeSwitch={() => setThemeMode(themeMode === ThemeModeType.light ? ThemeModeType.dark : ThemeModeType.light)}
 			/>
 			<Container>
-				<Welcome/>
-				<GettingStartedContainer id={'getting-started'}>
-					{activeAccount ? <SignedInBrief /> : <LandingBrief />}
-				</GettingStartedContainer>
+				<Home />
 			</Container>
 		</ThemeProvider>
 	);
