@@ -1,16 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { ActiveAccountContext } from '../App';
 import ReCAPTCHA from 'react-google-recaptcha';
 import axios from 'axios';
+import { useClickRef } from '@make-software/csprclick-ui';
+import styled from 'styled-components';
+
+const StyledContent = styled.div(({ theme }) =>
+	theme.withMedia({
+		display: 'flex',
+		width: '100%',
+		justifyContent: 'center',
+		alignItems: 'center',
+		gap: '1em',
+		"input[type='text']": {
+			height: '100%',
+		},
+	})
+);
+
+const Center = styled.div(({ theme }) =>
+	theme.withMedia({
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+	})
+);
 
 const Captcha: React.FC = () => {
+	const clickRef = useClickRef();
+	const activeAccount: any = useContext(ActiveAccountContext);
+
 	const [captchaValue, setCaptchaValue] = useState<string | null>(null);
 	const [textValue, setTextValue] = useState<string>('');
 	const siteKey = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI';
 
 	const handleCaptchaChange = (value: string | null) => {
 		setCaptchaValue(value);
-		console.log('Captcha value:', value);
 	};
+
+	useEffect(() => {
+		if (activeAccount == null || activeAccount.public_key == null) {
+			setTextValue('');
+		} else {
+			setTextValue(activeAccount.public_key);
+		}
+	}, [activeAccount]);
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -38,11 +72,27 @@ const Captcha: React.FC = () => {
 		}
 	};
 
+	async function connectWallet(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+		e.preventDefault();
+		await clickRef?.signIn();
+	}
+
 	return (
 		<form onSubmit={handleSubmit}>
-			<input type='text' value={textValue} onChange={e => setTextValue(e.target.value)} placeholder='Enter text' />
-			<ReCAPTCHA sitekey={siteKey} onChange={handleCaptchaChange} />
-			<button type='submit'>Submit</button>
+			<StyledContent>
+				<input
+					type='text'
+					value={textValue}
+					onChange={e => setTextValue(e.target.value)}
+					placeholder='Paste Public Key'
+				/>
+				<p>OR</p>
+				<button onClick={e => connectWallet(e)}>Sign In with CSPR.click</button>
+			</StyledContent>
+			<Center>
+				<ReCAPTCHA sitekey={siteKey} onChange={handleCaptchaChange} />
+				<button type='submit'>Submit</button>
+			</Center>
 		</form>
 	);
 };

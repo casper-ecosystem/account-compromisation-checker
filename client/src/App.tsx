@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, createContext } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { useClickRef, ThemeModeType } from '@make-software/csprclick-ui';
 import ClickTopBar from './components/ClickTopBar';
 import Container from './components/container';
 import { AppTheme } from './theme';
 import { Home } from './components/Home';
+
+export const ActiveAccountContext = createContext(null);
 
 const App = () => {
 	const clickRef = useClickRef();
@@ -33,7 +35,9 @@ const App = () => {
 				onThemeSwitch={() => setThemeMode(themeMode === ThemeModeType.light ? ThemeModeType.dark : ThemeModeType.light)}
 			/>
 			<Container>
-				<Home />
+				<ActiveAccountContext.Provider value={activeAccount}>
+					<Home />
+				</ActiveAccountContext.Provider>
 			</Container>
 		</ThemeProvider>
 	);

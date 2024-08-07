@@ -9,12 +9,34 @@ const Container = styled.div(({ theme }) =>
 	})
 );
 
+const Introduction = styled.div(({ theme }) =>
+	theme.withMedia({
+		textAlign: 'center',
+	})
+);
+
+const Center = styled.div(({ theme }) =>
+	theme.withMedia({
+		display: 'flex',
+		justifyContent: 'center',
+	})
+);
+
 export function Home() {
 	const [captchaSuccess, setCaptchaSuccess] = React.useState<boolean>(false);
 
 	return (
 		<Container>
-			<Captcha></Captcha>
+			<Introduction>
+				<h1>Casper Account Compromisation Checker</h1>
+				<p>
+					This tool can be used to determine if your account was compromised during the Casper mainnet&apos;s recent
+					security breach.
+				</p>
+			</Introduction>
+			<Center>
+				<Captcha></Captcha>
+			</Center>
 		</Container>
 	);
 }
