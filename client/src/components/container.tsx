@@ -8,7 +8,7 @@ const Container = styled.div(({ theme }) =>
 		minHeight: '100vh',
 		margin: '0 auto',
 		backgroundColor: theme.backgroundColor,
-		color: theme.contentSecondary,
+		color: theme.contentPrimary,
 		h2: { fontSize: 'calc(12px + 2vmin)', fontWeight: '700', color: theme.contentPrimary },
 		h3: { fontSize: 'calc(11px + 2vmin)', fontWeight: '500', color: theme.contentPrimary, marginTop: '100px' },
 		h5: { fontSize: 'calc(10px + 2vmin)', fontWeight: '500', color: theme.contentPrimary, textAlign: 'center' },
@@ -19,6 +19,9 @@ const Container = styled.div(({ theme }) =>
 		},
 		b: {
 			cursor: 'pointer',
+		},
+		p: {
+			textAlign: 'center',
 		},
 		span: {
 			fontSize: '16px',

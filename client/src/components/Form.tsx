@@ -7,14 +7,26 @@ import styled from 'styled-components';
 
 const StyledContent = styled.div(({ theme }) =>
 	theme.withMedia({
+		margin: 'auto',
 		display: 'flex',
-		width: '100%',
+		flexDirection: 'column',
+		width: ['80%'],
 		justifyContent: 'center',
 		alignItems: 'center',
 		gap: '1em',
 		"input[type='text']": {
-			height: '100%',
+			height: '2em',
+			width: ['80%'],
 		},
+		p: {
+			margin: 0,
+		},
+	})
+);
+
+const StyledForm = styled.form(({ theme }) =>
+	theme.withMedia({
+		margin: 'auto',
 	})
 );
 
@@ -23,10 +35,12 @@ const Center = styled.div(({ theme }) =>
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
+		marginTop: '1em',
+		gap: '1em',
 	})
 );
 
-const Captcha: React.FC = () => {
+const Form: React.FC = () => {
 	const clickRef = useClickRef();
 	const activeAccount: any = useContext(ActiveAccountContext);
 
@@ -87,6 +101,7 @@ const Captcha: React.FC = () => {
 					placeholder='Paste Public Key'
 				/>
 				<p>OR</p>
+				<p>Sign in with CSPR.click, which will auto-populate the above text field with your public key:</p>
 				<button onClick={e => connectWallet(e)}>Sign In with CSPR.click</button>
 			</StyledContent>
 			<Center>
@@ -97,4 +112,4 @@ const Captcha: React.FC = () => {
 	);
 };
 
-export default Captcha;
+export default Form;

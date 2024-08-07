@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import Captcha from './ReCAPTCHA';
+import Form from './Form';
 import React from 'react';
 
 const Container = styled.div(({ theme }) =>
 	theme.withMedia({
-		paddingTop: 40,
 		margin: 'auto',
+		maxWidth: ['95vw', '80vw'],
 	})
 );
 
@@ -33,9 +33,11 @@ export function Home() {
 					This tool can be used to determine if your account was compromised during the Casper mainnet&apos;s recent
 					security breach.
 				</p>
+				<p>To use this tool, either:</p>
+				<p>Paste your public key below</p>
 			</Introduction>
 			<Center>
-				<Captcha></Captcha>
+				<Form />
 			</Center>
 		</Container>
 	);
