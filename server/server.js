@@ -19,47 +19,47 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.post("/check", async (req, res) => {
-	const { captchaValue, textValue } = req.body;
+  const { captchaValue, textValue } = req.body;
 
-	if (!captchaValue) {
-		return res.status(400).json({ error: "Please complete the reCAPTCHA" });
-	}
+  if (!captchaValue) {
+    return res.status(400).json({ error: "Please complete the reCAPTCHA" });
+  }
 
-	const verificationURL = `https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET_KEY}&response=${captchaValue}`;
+  const verificationURL = `https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET_KEY}&response=${captchaValue}`;
 
-	try {
-		// Verify reCAPTCHA
-		const captchaResponse = await axios.post(verificationURL);
-		const captchaData = captchaResponse.data;
+  try {
+    // Verify reCAPTCHA
+    const captchaResponse = await axios.post(verificationURL);
+    const captchaData = captchaResponse.data;
 
-		if (!captchaData.success) {
-			return res.status(400).json({ error: "Invalid reCAPTCHA" });
-		}
+    if (!captchaData.success) {
+      return res.status(400).json({ error: "Invalid reCAPTCHA" });
+    }
 
-		// Verify text value
-		db.get("SELECT 1 FROM publicKeys WHERE id = ?", [textValue], (err, row) => {
-			if (err) {
-				return res.status(500).json({ error: "Failed to check text" });
-			}
+    // Verify text value
+    db.get("SELECT 1 FROM publicKeys WHERE id = ?", [textValue], (err, row) => {
+      if (err) {
+        return res.status(500).json({ error: "Failed to check text" });
+      }
 
-			if (row) {
-				res.json({
-					success: true,
-					message: "Captcha and text verified successfully"
-				});
-			} else {
-				res.json({
-					success: false,
-					message: "Text does not exist in the database"
-				});
-			}
-		});
-	} catch (error) {
-		console.log(error);
-		res.status(500).json({ error: "Failed to verify reCAPTCHA" });
-	}
+      if (row) {
+        res.json({
+          success: true,
+          message: "Captcha and text verified successfully",
+        });
+      } else {
+        res.json({
+          success: false,
+          message: "Text does not exist in the database",
+        });
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Failed to verify reCAPTCHA" });
+  }
 });
 
 app.listen(port, () => {
-	console.log(`Server is running on http://localhost:${port}`);
+  console.log(`Server is running on http://localhost:${port}`);
 });

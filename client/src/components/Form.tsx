@@ -24,12 +24,6 @@ const StyledContent = styled.div(({ theme }) =>
 	})
 );
 
-const StyledForm = styled.form(({ theme }) =>
-	theme.withMedia({
-		margin: 'auto',
-	})
-);
-
 const Center = styled.div(({ theme }) =>
 	theme.withMedia({
 		display: 'flex',
@@ -40,7 +34,11 @@ const Center = styled.div(({ theme }) =>
 	})
 );
 
-const Form: React.FC = () => {
+interface FormProps {
+	setCompromised: React.Dispatch<React.SetStateAction<boolean | null>>;
+}
+
+const Form = (props: FormProps) => {
 	const clickRef = useClickRef();
 	const activeAccount: any = useContext(ActiveAccountContext);
 
@@ -73,12 +71,11 @@ const Form: React.FC = () => {
 				captchaValue,
 				textValue,
 			});
-			console.log(response.data);
 
 			if (response.data.success) {
-				alert('Captcha and text verified successfully');
+				props.setCompromised(true);
 			} else {
-				alert('Verification failed: ' + response.data.message);
+				props.setCompromised(false);
 			}
 		} catch (error) {
 			console.error('Error:', error);

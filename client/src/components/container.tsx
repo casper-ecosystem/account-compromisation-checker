@@ -13,9 +13,8 @@ const Container = styled.div(({ theme }) =>
 		h3: { fontSize: 'calc(11px + 2vmin)', fontWeight: '500', color: theme.contentPrimary, marginTop: '100px' },
 		h5: { fontSize: 'calc(10px + 2vmin)', fontWeight: '500', color: theme.contentPrimary, textAlign: 'center' },
 		a: {
-			color: theme.linkColor,
+			color: theme.fillPrimaryBlue,
 			cursor: 'pointer',
-			textDecoration: 'none',
 		},
 		b: {
 			cursor: 'pointer',

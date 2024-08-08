@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Form from './Form';
 import React from 'react';
+import Result from './Result';
 
 const Container = styled.div(({ theme }) =>
 	theme.withMedia({
@@ -24,6 +25,11 @@ const Center = styled.div(({ theme }) =>
 
 export function Home() {
 	const [captchaSuccess, setCaptchaSuccess] = React.useState<boolean>(false);
+	const [compromised, setCompromised] = React.useState<boolean | null>(null);
+
+	if (compromised !== null) {
+		return <Result compromised={compromised} />;
+	}
 
 	return (
 		<Container>
@@ -37,7 +43,7 @@ export function Home() {
 				<p>Paste your public key below</p>
 			</Introduction>
 			<Center>
-				<Form />
+				<Form setCompromised={setCompromised} />
 			</Center>
 		</Container>
 	);
