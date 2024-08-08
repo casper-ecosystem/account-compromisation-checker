@@ -4,6 +4,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import axios from 'axios';
 import { useClickRef } from '@make-software/csprclick-ui';
 import styled from 'styled-components';
+import CryptoJS from 'crypto-js';
 
 const StyledContent = styled.div(({ theme }) =>
 	theme.withMedia({
@@ -67,9 +68,10 @@ const Form = (props: FormProps) => {
 		}
 
 		try {
+			const hash = CryptoJS.SHA256(textValue).toString(CryptoJS.enc.Hex);
 			const response = await axios.post('http://localhost:3001/check', {
 				captchaValue,
-				textValue,
+				hash,
 			});
 
 			if (response.data.success) {

@@ -1,6 +1,5 @@
 import express from "express";
 import bodyParser from "body-parser";
-import fetch from "node-fetch";
 import dotenv from "dotenv";
 import sqlite3 from "sqlite3";
 import cors from "cors";
@@ -19,7 +18,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.post("/check", async (req, res) => {
-  const { captchaValue, textValue } = req.body;
+  const { captchaValue, hash } = req.body;
 
   if (!captchaValue) {
     return res.status(400).json({ error: "Please complete the reCAPTCHA" });
@@ -37,7 +36,7 @@ app.post("/check", async (req, res) => {
     }
 
     // Verify text value
-    db.get("SELECT 1 FROM publicKeys WHERE id = ?", [textValue], (err, row) => {
+    db.get("SELECT 1 FROM publicKeys WHERE id = ?", [hash], (err, row) => {
       if (err) {
         return res.status(500).json({ error: "Failed to check text" });
       }
