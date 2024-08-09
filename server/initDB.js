@@ -27,7 +27,14 @@ dotenv.config();
 
   for (const account of accounts) {
     const hash = crypto.createHash("sha256").update(account).digest("hex");
-    await connection.execute(`INSERT INTO \`${process.env.MYSQL_TABLE}\` (id) VALUES (?)`, [hash]);
+    const [rows] = await connection.execute(`SELECT 1 FROM \`${process.env.MYSQL_TABLE}\` WHERE id = ?`, [hash]);
+
+    if (rows.length === 0) {
+      // Only insert the key if it doesn't already exist
+      await connection.execute(`INSERT INTO \`${process.env.MYSQL_TABLE}\` (id) VALUES (?)`, [hash]);
+    } else {
+      console.log(`Entry for hash ${hash} already exists, skipping insertion.`);
+    }
   }
 
   console.log("Database initialized with data");
