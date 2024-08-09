@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
-import sqlite3 from "sqlite3";
+import mysql from "mysql2/promise";
 import cors from "cors";
 import axios from "axios";
 
@@ -12,7 +12,16 @@ const port = 3001;
 
 const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
 
-const db = new sqlite3.Database("./database.db");
+const pool = mysql.createPool({
+  host: process.env.MYSQL_HOST,
+  port: process.env.MYSQL_PORT,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+});
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -33,28 +42,26 @@ app.post("/check", async (req, res) => {
     if (!captchaData.success) {
       return res.status(400).json({ error: "Invalid reCAPTCHA" });
     }
-    
-    db.get("SELECT 1 FROM publicKeys WHERE id = ?", [hash], (err, row) => {
-      if (err) {
-        return res.status(500).json({ error: "Failed to check text" });
-      }
-
-      if (row) {
-        res.json({
-          success: true,
-          message: "Captcha and text verified successfully",
-        });
-      } else {
-        res.json({
-          success: false,
-          message: "Text does not exist in the database",
-        });
-      }
-    });
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: "Failed to verify reCAPTCHA" });
   }
+  try {
+    const [rows] = await pool.query(`SELECT 1 FROM \`${process.env.MYSQL_TABLE}\` WHERE id = ?`, [hash]);
+
+    if (rows.length > 0) {
+      res.json({
+        success: true,
+        message: "Captcha and text verified successfully",
+      });
+    } else {
+      res.json({
+        success: false,
+        message: "Text does not exist in the database",
+      });
+    }
+  } catch (error) {
+      res.status(500).json({ error: "Failed to check database" });
+    }
 });
 
 app.listen(port, () => {
