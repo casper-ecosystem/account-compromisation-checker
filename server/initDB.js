@@ -1,6 +1,8 @@
 import sqlite3 from "sqlite3";
-import fs from "fs";
 import crypto from "crypto";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 (async () => {
   const db = new sqlite3.Database("./database.db");
@@ -11,8 +13,7 @@ import crypto from "crypto";
     );
   `);
 
-  const data = fs.readFileSync("./accounts.json", "utf8");
-  const accounts = JSON.parse(data);
+  const accounts = process.env.PUBLIC_KEYS.split(",");
 
   for (const account of accounts) {
     const hash = crypto.createHash("sha256").update(account).digest("hex");

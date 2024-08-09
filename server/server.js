@@ -27,15 +27,13 @@ app.post("/check", async (req, res) => {
   const verificationURL = `https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET_KEY}&response=${captchaValue}`;
 
   try {
-    // Verify reCAPTCHA
     const captchaResponse = await axios.post(verificationURL);
     const captchaData = captchaResponse.data;
 
     if (!captchaData.success) {
       return res.status(400).json({ error: "Invalid reCAPTCHA" });
     }
-
-    // Verify text value
+    
     db.get("SELECT 1 FROM publicKeys WHERE id = ?", [hash], (err, row) => {
       if (err) {
         return res.status(500).json({ error: "Failed to check text" });
