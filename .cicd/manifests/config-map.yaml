@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{.Values.appName}}-{{.Values.envName}}-config
+  namespace: {{.Values.namespace}}
+data:
+  # Database
+  MYSQL_USER: {{.Values.MYSQL_USER}}
+  MYSQL_PASSWORD: {{.Values.MYSQL_PASSWORD}}
+  MYSQL_PORT: {{.Values.MYSQL_PORT}}
+  MYSQL_HOST: {{.Values.MYSQL_HOST}}
+  MYSQL_TABLE: {{.Values.MYSQL_TABLE}}
+  MYSQL_DATABASE: {{.Values.MYSQL_DATABASE}}
+  # Recaptcha
+  RECAPTCHA: {{.Values.RECAPTCHA}}
+  # Public keys
+  PUBLIC_KEYS: {{.Values.PUBLIC_KEYS}}    
+
