@@ -11,56 +11,31 @@ To use the app, [open it]() in a browser and paste your public key or sign in wi
 ```bash
 git clone https://github.com/casper-ecosystem/account-compromisation-checker.git
 cd account-compromisation-checker/
-cd client/
-npm install
-npm run build
-cd ../server
 ```
 
-Insert reCAPTCHA secret key in *.env*:
+Populate *server/.env*:
 
 ```bash
-nano .env
+nano server/.env
 ```
 
 ```
-RECAPTCHA_SECRET_KEY=6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe
+RECAPTCHA_SECRET_KEY=<RECAPTCHA_KEY>
+MYSQL_HOST=<MYSQL_HOST>
+MYSQL_PORT=<MYSQL_PORT>
+MYSQL_USER=<MYSQL_USER>
+MYSQL_PASSWORD=<MYSQL_PASSWORD>
+MYSQL_DATABASE=<MYSQL_DATABASE_NAME>
+MYSQL_TABLE=<MYSQL_TABLE_NAME>
+PUBLIC_KEYS=020387a4b7472805b2efe2510ebfb95e5dbaeef4b883d11ed7d22b090fb4455bad91,0172ca9275d3592ac7402b861879c94aea699db409940945de9d619a734c90d79d,01f24c679f4e3b2201a359c4233d6902e1e565a4a09a6ca36f9a8749f5e88fbbcf
 ```
 
-Install packages:
+**Note: Replace each `<VALUE>` above with the appropriate data. `MYSQL_DATABASE` and `MYSQL_TABLE` can be any value. `PUBLIC_KEYS` should contain each public key to be populated into the database, separated by commas.**
+
+Build and run Docker images:
 
 ```bash
-npm install
+docker-compose up --build
 ```
-
-Populate compromised accounts:
-
-```bash
-nano accounts.json
-```
-
-```json
-[
-  "0203ddea9e63f0c56f76ab87c76a5070e7703dc40ecbfe7b9d9a04d55e36a38a84c7",
-  "019cf922e91f564896175b9bf6850788ebaa0c8a809d940570f8dd6f0bd5ed822d",
-  "0202a7c5e09e4c39438420ab667ea2faf3d2b48e45988cba1fd50fa0bc39b3a27b0b",
-  ...
-]
-```
-
-Initialize database:
-
-```bash
-node initDB.js
-```
-
-**Note: The SHA-256 hash of each account is stored in the database rather than the public key itself**
-
-Run server:
-
-```bash
-node server.js
-```
-
 
 
