@@ -45,7 +45,11 @@ const Form = (props: FormProps) => {
 
 	const [captchaValue, setCaptchaValue] = useState<string | null>(null);
 	const [textValue, setTextValue] = useState<string>('');
-	const siteKey = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI';
+	const siteKey = process.env.REACT_APP_RECAPTCHA_CLIENT_KEY;
+
+	if (!siteKey) {
+		return <h1>No reCAPTCHA client key set in .env</h1>;
+	}
 
 	const handleCaptchaChange = (value: string | null) => {
 		setCaptchaValue(value);
@@ -69,10 +73,13 @@ const Form = (props: FormProps) => {
 
 		try {
 			const hash = CryptoJS.SHA256(textValue).toString(CryptoJS.enc.Hex);
-			const response = await axios.post('http://localhost:3001/check', {
-				captchaValue,
-				hash,
-			});
+			const response = await axios.post(
+				`${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/check`,
+				{
+					captchaValue,
+					hash,
+				}
+			);
 
 			if (response.data.success) {
 				props.setCompromised(true);

@@ -20,10 +20,16 @@ const pool = mysql.createPool({
   database: process.env.MYSQL_DATABASE,
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0
+  queueLimit: 0,
 });
 
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    methods: ["POST"],
+  })
+);
+
 app.use(bodyParser.json());
 
 app.post("/check", async (req, res) => {
@@ -60,8 +66,8 @@ app.post("/check", async (req, res) => {
       });
     }
   } catch (error) {
-      res.status(500).json({ error: "Failed to check database" });
-    }
+    res.status(500).json({ error: "Failed to check database" });
+  }
 });
 
 app.listen(port, () => {
