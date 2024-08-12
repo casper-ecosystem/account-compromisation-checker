@@ -17,7 +17,12 @@ MYSQL_TABLE: <+serviceVariables.MYSQL_TABLE>
 MYSQL_DATABASE: <+serviceVariables.MYSQL_DATABASE>
 
 # Recaptcha
-RECAPTCHA: <+serviceVariables.RECAPTCHA>
+RECAPTCHA_SECRET_KEY: <+serviceVariables.RECAPTCHA_SECRET_KEY>
 
 # Public keys
 PUBLIC_KEYS: <+serviceVariables.PUBLIC_KEYS>
+
+# React
+REACT_APP_BACKEND_URL: <+serviceVariables.REACT_APP_BACKEND_URL>
+REACT_APP_BACKEND_PORT: <+serviceVariables.REACT_APP_BACKEND_PORT>
+REACT_APP_RECAPTCHA_CLIENT_KEY: <+serviceVariables.REACT_APP_RECAPTCHA_CLIENT_KEY>
