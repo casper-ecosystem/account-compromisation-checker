@@ -7,6 +7,7 @@ servicePort: 80
 namespace: <+service.name>-<+env.name>
 ingressDomainName: <+serviceVariables.ingressDomainName>
 CorsOrigin: <+serviceVariables.CorsOrigin>
+ExecutionId: <+pipeline.executionId>
 
 # Database
 MYSQL_USER: <+serviceVariables.MYSQL_USER>
