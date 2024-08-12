@@ -13,7 +13,7 @@ git clone https://github.com/casper-ecosystem/account-compromisation-checker.git
 cd account-compromisation-checker/
 ```
 
-Populate *server/.env*:
+Populate _server/.env_:
 
 ```bash
 nano server/.env
@@ -32,10 +32,22 @@ PUBLIC_KEYS=020387a4b7472805b2efe2510ebfb95e5dbaeef4b883d11ed7d22b090fb4455bad91
 
 **Note: Replace each `<VALUE>` above with the appropriate data. `MYSQL_DATABASE` and `MYSQL_TABLE` can be any value. `PUBLIC_KEYS` should contain each public key to be populated into the database, separated by commas.**
 
+Populate _client/.env_:
+
+```bash
+nano client/.env
+```
+
+```
+REACT_APP_BACKEND_URL=http://localhost
+REACT_APP_BACKEND_PORT=3001
+REACT_APP_RECAPTCHA_CLIENT_KEY=6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI
+```
+
+**Note: Replace each `<VALUE>` above with the appropriate data.**
+
 Build and run Docker images:
 
 ```bash
 docker-compose up --build
 ```
-
-
