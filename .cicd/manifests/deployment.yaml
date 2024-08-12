@@ -5,6 +5,7 @@ metadata:
   name: {{.Values.appName}}-{{.Values.envName}}
   labels:
     app: {{.Values.appName}}-{{.Values.envName}}
+    exectionId: {{.Values.ExecutionId}}
 spec:
   replicas: {{.Values.replicaCount}}
   selector:
@@ -14,6 +15,7 @@ spec:
     metadata:
       labels:
         app: {{.Values.appName}}-{{.Values.envName}}
+        exectionId: {{.Values.ExecutionId}}
     spec:
       containers:
       - name: {{.Values.appName}}-{{.Values.envName}}
