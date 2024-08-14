@@ -1,0 +1,29 @@
+# K8S / Harness
+envName: <+env.name>
+appName: <+service.name>
+artifactImage: <+artifact.image> #from Harness Service Primary Artifact
+containerPort: <+serviceVariables.containerPort>
+servicePort: 80
+namespace: <+service.name>-<+env.name>
+ingressDomainName: <+serviceVariables.ingressDomainName>
+CorsOrigin: <+serviceVariables.CorsOrigin>
+ExecutionId: <+pipeline.executionId>
+
+# Database
+MYSQL_USER: <+serviceVariables.MYSQL_USER>
+MYSQL_PASSWORD: <+serviceVariables.MYSQL_PASSWORD>
+MYSQL_PORT: <+serviceVariables.MYSQL_PORT>
+MYSQL_HOST: <+serviceVariables.MYSQL_HOST>
+MYSQL_TABLE: <+serviceVariables.MYSQL_TABLE>
+MYSQL_DATABASE: <+serviceVariables.MYSQL_DATABASE>
+
+# Recaptcha
+RECAPTCHA_SECRET_KEY: <+serviceVariables.RECAPTCHA_SECRET_KEY>
+
+# Public keys
+PUBLIC_KEYS: <+serviceVariables.PUBLIC_KEYS>
+
+# React
+REACT_APP_BACKEND_URL: <+serviceVariables.REACT_APP_BACKEND_URL>
+REACT_APP_BACKEND_PORT: <+serviceVariables.REACT_APP_BACKEND_PORT>
+REACT_APP_RECAPTCHA_CLIENT_KEY: <+serviceVariables.REACT_APP_RECAPTCHA_CLIENT_KEY>
