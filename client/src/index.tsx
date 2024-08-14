@@ -7,10 +7,10 @@ import { CONTENT_MODE } from '@make-software/csprclick-core-types';
 import App from './App';
 
 const clickOptions: CsprClickInitOptions = {
-	appName: 'CSPR.app',
+	appName: 'Account Compromisation Checker',
 	contentMode: CONTENT_MODE.IFRAME,
 	providers: ['casper-wallet', 'ledger', 'torus-wallet', 'casperdash', 'metamask-snap', 'casper-signer'],
-	appId: 'csprclick-template',
+	appId: process.env.REACT_APP_CSPR_CLICK_ID as string,
 };
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
