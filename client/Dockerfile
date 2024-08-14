@@ -17,8 +17,6 @@ RUN npm install
 
 COPY . .
 
-RUN printf ${REACT_APP_RECAPTCHA_CLIENT_KEY} >> .env && printf ${REACT_APP_RECAPTCHA_CLIENT_KEY} >> .env && printf ${REACT_APP_RECAPTCHA_CLIENT_KEY} >> .env
-
 RUN npm run build
 
 FROM nginx:alpine
