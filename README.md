@@ -42,6 +42,7 @@ nano client/.env
 REACT_APP_BACKEND_URL=http://localhost
 REACT_APP_BACKEND_PORT=3001
 REACT_APP_RECAPTCHA_CLIENT_KEY=6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI
+REACT_APP_CSPR_CLICK_ID=csprclick-template
 ```
 
 **Note: Replace each `<VALUE>` above with the appropriate data.**
